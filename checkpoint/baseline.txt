@@ -1,0 +1,28 @@
+# Can one-hot encoding make linear regression match an MLP?
+
+## Group
+Canvas group: 5420 Final project ; Group Members: Xin, Ray.
+
+## Changes since the proposal
+Per instructor feedback, C+ will be added and B+ included in the main comparison; neither is implemented yet. Completed changes include A/B baselines and corrected split counts: the fixed date boundary yields 13,891/3,488, not 13,903/3,476. The original counts correspond to a different, within-day row boundary.
+
+## Data
+UCI Bike Sharing hour.csv contains 17,379 hourly records from 2011-2012. The target is cnt. Inputs are season, yr, mnth, hr, holiday, weekday, workingday, weathersit, temp, atemp, hum, and windspeed. No rows were deleted. Three weathersit=4 records were mapped to 3. instant, dteday, casual, and registered are excluded from model inputs; dates remain evaluation metadata. The original CSV is unchanged.
+
+## Split
+Train: 13,891 records dated before 2012-08-07. Final held-out test: 3,488 records from that date onward. All models share five expanding-window CV folds with complete-date validation windows, strictly earlier training dates, and no shuffling. Preprocessing is fitted within each training fold. Bootstrap seed is 42. The final test set remains isolated and unevaluated.
+
+## Baseline
+Model B uses Ridge with one-hot encoding of hr, weekday, mnth, season, and weathersit; unseen categories are ignored. The remaining seven predictors use StandardScaler inside a ColumnTransformer/Pipeline. A fixed grid of 25 logarithmically spaced alpha values from 10^-4 to 10^4 was evaluated on the same five folds. Minimum mean fold MAE selected alpha=0.0001. Model A uses StandardScaler and LinearRegression on the 12 numerical predictors.
+
+## Result
+Model B pooled out-of-fold Validation MAE is 80.1873 bikes/hour, with 95% percentile Bootstrap CI [78.2162, 82.2004], using 5,000 whole-day resamples stratified by Fold. Model A OOF Validation MAE is 108.7474. Each model has 11,608 validation predictions. These are CV Validation results, not Final Test MAE.
+
+## Issues found
+Proposal split counts were incorrect. The data omit 165 hourly timestamps; these were not imputed. The best alpha is at the grid's lower bound. Selecting and scoring alpha on the same CV can introduce selection optimism. The CI conditions on the selected alpha and fitted models; it excludes selection uncertainty and dependence across days and overlapping training windows.
+
+## Next steps
+Before the 11/16 Early Paper Draft, plan to complete B+, C, C+, compare hourly MAE, and develop error analysis. A/B hourly metrics already exist. Xin: [responsibilities TO CONFIRM]. Ray: [responsibilities TO CONFIRM]. Extended model specifications also require confirmation.
+
+## Code
+[https://github.com/DukeRay-Lin/F26ESE5420_Data_science](https://github.com/DukeRay-Lin/F26ESE5420_Data_science)

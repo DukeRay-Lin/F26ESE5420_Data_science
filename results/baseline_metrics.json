@@ -1,0 +1,222 @@
+{
+  "units": "bikes/hour",
+  "evaluation": "Expanding-window CV validation; not final test",
+  "train_sha256": "37702eaf04108fc85fad0d9ec0c755e93bf04259003c3cecf7354170d7e5b12d",
+  "cv_manifest_sha256": "b6506d14a537414594c49f3d792c28c1dad0bed83194bcc029abe6de7799eb7c",
+  "features": [
+    "season",
+    "yr",
+    "mnth",
+    "hr",
+    "holiday",
+    "weekday",
+    "workingday",
+    "weathersit",
+    "temp",
+    "atemp",
+    "hum",
+    "windspeed"
+  ],
+  "categorical_b": [
+    "hr",
+    "weekday",
+    "mnth",
+    "season",
+    "weathersit"
+  ],
+  "numerical_b": [
+    "yr",
+    "holiday",
+    "workingday",
+    "temp",
+    "atemp",
+    "hum",
+    "windspeed"
+  ],
+  "model_a": {
+    "fold_mae": [
+      100.75241143712559,
+      100.79879817905665,
+      78.25278782808954,
+      115.01801269917365,
+      148.7808214708638
+    ],
+    "mean_fold_mae": 108.72056632286186,
+    "sample_sd_fold_mae": 25.976014429658658,
+    "oof_mae": 108.74742973931255,
+    "oof_observations": 11608,
+    "negative_predictions": 135
+  },
+  "model_b": {
+    "fold_mae": [
+      85.00150749792812,
+      67.53605211843687,
+      60.19166679251863,
+      79.64387437775704,
+      108.41144258413122
+    ],
+    "mean_fold_mae": 80.15690867415438,
+    "sample_sd_fold_mae": 18.57383194183985,
+    "oof_mae": 80.1873237237641,
+    "oof_observations": 11608,
+    "negative_predictions": 364,
+    "best_alpha": 0.0001
+  },
+  "alpha_grid": [
+    0.0001,
+    0.00021544346900318845,
+    0.00046415888336127773,
+    0.001,
+    0.002154434690031882,
+    0.004641588833612777,
+    0.01,
+    0.021544346900318822,
+    0.046415888336127774,
+    0.1,
+    0.21544346900318823,
+    0.46415888336127775,
+    1.0,
+    2.154434690031882,
+    4.641588833612772,
+    10.0,
+    21.54434690031882,
+    46.41588833612773,
+    100.0,
+    215.44346900318823,
+    464.1588833612773,
+    1000.0,
+    2154.4346900318824,
+    4641.588833612773,
+    10000.0
+  ],
+  "selection_rule": "minimum unweighted mean fold MAE; smaller alpha breaks exact ties",
+  "bootstrap_b": {
+    "method": "Fold-stratified whole-day percentile bootstrap of pooled validation MAE",
+    "seed": 42,
+    "repetitions": 5000,
+    "confidence": 0.95,
+    "lower": 78.21619439073238,
+    "upper": 82.20038490428345,
+    "strata": [
+      {
+        "fold": 1,
+        "days": 97,
+        "observations": 2327,
+        "min_day_observations": 23,
+        "max_day_observations": 24
+      },
+      {
+        "fold": 2,
+        "days": 97,
+        "observations": 2311,
+        "min_day_observations": 17,
+        "max_day_observations": 24
+      },
+      {
+        "fold": 3,
+        "days": 97,
+        "observations": 2321,
+        "min_day_observations": 23,
+        "max_day_observations": 24
+      },
+      {
+        "fold": 4,
+        "days": 97,
+        "observations": 2321,
+        "min_day_observations": 23,
+        "max_day_observations": 24
+      },
+      {
+        "fold": 5,
+        "days": 97,
+        "observations": 2328,
+        "min_day_observations": 24,
+        "max_day_observations": 24
+      }
+    ],
+    "scope": "CV validation only; conditional on selected alpha and fitted fold models; no retraining or alpha reselection",
+    "limitations": "Not a final-test interval. Does not account for alpha selection or dependence across days and overlapping training windows."
+  },
+  "prediction_rows": 23216,
+  "unique_validation_rows": 11608,
+  "unknown_categories": [
+    {
+      "fold": 1,
+      "validation_categories_absent_from_training": {
+        "hr": [],
+        "weekday": [],
+        "mnth": [
+          5,
+          6,
+          7
+        ],
+        "season": [
+          3
+        ],
+        "weathersit": []
+      }
+    },
+    {
+      "fold": 2,
+      "validation_categories_absent_from_training": {
+        "hr": [],
+        "weekday": [],
+        "mnth": [
+          8,
+          9,
+          10
+        ],
+        "season": [
+          4
+        ],
+        "weathersit": []
+      }
+    },
+    {
+      "fold": 3,
+      "validation_categories_absent_from_training": {
+        "hr": [],
+        "weekday": [],
+        "mnth": [
+          11,
+          12
+        ],
+        "season": [],
+        "weathersit": []
+      }
+    },
+    {
+      "fold": 4,
+      "validation_categories_absent_from_training": {
+        "hr": [],
+        "weekday": [],
+        "mnth": [],
+        "season": [],
+        "weathersit": []
+      }
+    },
+    {
+      "fold": 5,
+      "validation_categories_absent_from_training": {
+        "hr": [],
+        "weekday": [],
+        "mnth": [],
+        "season": [],
+        "weathersit": []
+      }
+    }
+  ],
+  "predictions_clipped": false,
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scipy": "1.18.1",
+    "scikit_learn": "1.7.2"
+  },
+  "runtime": {
+    "blas_threads": 1,
+    "ridge_solver": "svd",
+    "bootstrap_rng": "numpy.default_rng(42)"
+  }
+}
